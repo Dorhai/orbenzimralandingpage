@@ -23,20 +23,20 @@ const Pricing = () => {
   const backgroundY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : ['-20%', '20%']);
 
   return (
-    <section ref={sectionRef} id="pricing" className="py-24 bg-white relative overflow-hidden">
+    <section ref={sectionRef} id="pricing" className="section-padding bg-card relative overflow-hidden">
       {/* Decorative Parallax Background */}
       <motion.div
         style={{ y: backgroundY }}
-        className="absolute top-0 right-0 w-96 h-96 bg-gray-100/50 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/3"
+        className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/3"
       />
       <motion.div
         style={{ y: backgroundY }}
-        className="absolute bottom-0 left-0 w-[30rem] h-[30rem] bg-[#202A36]/[0.02] rounded-full blur-3xl pointer-events-none translate-y-1/3 -translate-x-1/4"
+        className="absolute bottom-0 left-0 w-[30rem] h-[30rem] bg-primary/5 rounded-full blur-3xl pointer-events-none translate-y-1/3 -translate-x-1/4"
       />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <Reveal className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+        <Reveal className="section-intro text-center">
+          <h2 className="section-heading text-foreground">
             {siteContent.pricing.title}
           </h2>
         </Reveal>
@@ -50,7 +50,7 @@ const Pricing = () => {
                 <TiltCard className="h-full" max={6}>
                   <Card
                     className={`h-full text-start flex flex-col relative ${
-                      isMiddle ? 'border-[#202A36] border-2 shadow-xl lg:-mt-4 lg:mb-4' : ''
+                      isMiddle ? 'border-primary border-2 shadow-xl lg:-mt-4 lg:mb-4' : ''
                     }`}
                   >
                     {isMiddle && (
@@ -61,20 +61,20 @@ const Pricing = () => {
 
                     <CardHeader>
                       <CardTitle className="text-2xl">{plan.name}</CardTitle>
-                      <p className="text-gray-500">{plan.description}</p>
+                      <p className="text-muted-foreground">{plan.description}</p>
                     </CardHeader>
 
                     <CardContent className="flex flex-col flex-1">
                       <div className="mb-6">
-                        <span className="text-4xl font-bold text-gray-900">₪{plan.price}</span>
-                        <span className="text-gray-500"> / {plan.period}</span>
+                        <span className="text-3xl sm:text-4xl font-bold text-foreground">₪{plan.price}</span>
+                        <span className="text-muted-foreground"> / {plan.period}</span>
                       </div>
 
                       <ul className="flex-1 space-y-4 mb-8">
                         {plan.features.map((feature, featureIdx) => (
                           <li key={featureIdx} className="flex items-start gap-3">
-                            <Check className="w-5 h-5 text-[#202A36] shrink-0 mt-0.5" />
-                            <span className="text-gray-600">{feature}</span>
+                            <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                            <span className="text-muted-foreground">{feature}</span>
                           </li>
                         ))}
                       </ul>

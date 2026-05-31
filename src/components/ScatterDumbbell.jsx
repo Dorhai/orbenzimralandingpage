@@ -43,7 +43,7 @@ function ScatterDumbbell({
   return (
     <div className={`relative ${className}`} style={{ aspectRatio: '200 / 72' }}>
       <div
-        className="absolute inset-0 -z-10 blur-3xl rounded-full scale-110 opacity-[0.12] bg-[#202A36]"
+        className="absolute inset-0 -z-10 blur-3xl rounded-full scale-110 opacity-[0.12] bg-primary"
         aria-hidden
       />
 

@@ -1,6 +1,6 @@
 export const siteContent = {
   gym: {
-    name: "אור בן זימרא",
+    name: "אור בן זימרה",
     tagline: "מאמן כושר אישי",
     // Logo brand text (shown in the logo lockup)
     logoText: "OR BEN ZIMRA",
@@ -9,7 +9,7 @@ export const siteContent = {
   contact: {
     phone: "050-000-0000",
     email: "or@orbenzimra.co.il",
-    address: "אימונים באולם, בבית או בחוץ — תל אביב והמרכז"
+    address: "אימונים באולם, בבית או בחוץ, תל אביב והמרכז"
   },
   nav: {
     links: [
@@ -23,45 +23,77 @@ export const siteContent = {
     cta: "קבעו אימון ניסיון"
   },
   hero: {
+    coachImage: "/images/coach-cutout.png",
+    coachImageAlt: "אור בן זימרה, מאמן כושר אישי",
+    backgroundImageAlt: "אולם אימונים",
     label: "מאמן כושר אישי",
-    // Two-line headline (overlapping style). Edit freely:
-    headlineLine1: "כושר אישי.",
-    headlineLine2: "תוצאות אמיתיות.",
-    subtitle: "אימון אישי מותאם בדיוק עבורך — ליווי צמוד, תוכנית מדויקת ותוצאות שאפשר לראות. בואו נגיע ליעד יחד.",
+    headlineLine1: "הגיע הזמן להפסיק להילחם לבד",
+    headlineLine2: "ולהתחיל לראות תוצאות.",
+    subtitle: "אימון אישי מותאם בדיוק עבורך, ליווי צמוד, תוכנית מדויקת ותוצאות שאפשר לראות. בואו נגיע ליעד יחד.",
     primaryCta: "קבעו אימון ניסיון",
     secondaryCta: "צפו במסלולים"
   },
   about: {
-    title: "אודותי",
-    paragraph: "אני אור בן זימרא, מאמן כושר אישי עם ניסיון של למעלה מעשור. אני מאמין שכל אחד יכול להגיע לגוף חזק ובריא — רק צריך את הגישה הנכונה. אני בונה תוכניות אימון מותאמות אישית, עוקב אחר ההתקדמות שלך ודוחף אותך להשיג את המטרות שלך, בקצב שלך.",
-    stats: [
-      { value: "10+", label: "שנות ניסיון" },
-      { value: "500+", label: "מתאמנים מלווים" },
-      { value: "95%", label: "שביעות רצון" }
-    ]
+    title: "קצת עלי",
+    beforeImage: "/images/about/or-before.png?v=3",
+    afterImage: "/images/about/or-after.png",
+    beforeImageAlt: "אור בן זימרה לפני השינוי",
+    afterImageAlt: "אור בן זימרה אחרי השינוי",
+    lines: [
+      {
+        text: "התחלתי כילד רזה, ביישן וחסר ביטחון,",
+        redLine: true,
+        maxWidth: "42rem",
+      },
+      {
+        text: "בלי ידע, בלי תוכנית",
+        redLine: true,
+        maxWidth: "34rem",
+      },
+      {
+        text: "ובלי מושג מאיפה להתחיל.",
+        redLine: true,
+        maxWidth: "28rem",
+      },
+      { text: "לא היו לי קיצורי דרך. היו טעויות, נפילות", maxWidth: "34rem" },
+      { text: "והרבה תסכול, אבל עם התמדה,", maxWidth: "26rem" },
+      { text: "ידע ותוכנית נכונה הצלחתי", maxWidth: "20rem" },
+      { text: "לבנות את הגוף והביטחון שרציתי.", maxWidth: "24rem" },
+      {
+        text: "היום הפכתי את הדרך שלי למקצוע,",
+        redLine: true,
+        maxWidth: "32rem",
+      },
+      {
+        text: "ואני עוזר לאחרים לבנות",
+        redLine: true,
+        maxWidth: "30rem",
+      },
+      {
+        text: "גוף וביטחון אמיתי.",
+        redLine: true,
+        maxWidth: "36rem",
+      },
+    ],
   },
   programs: {
     title: "סוגי האימון",
     items: [
       {
         title: "אימון אישי 1 על 1",
-        description: "אימון פרטני מלא עם ליווי צמוד, תיקון טכניקה והתאמת עומסים בזמן אמת — באולם, בבית או בחוץ.",
-        imageUrl: "https://placehold.co/600x400/202A36/ffffff?text=Personal+Training"
+        description: "אימון פרטני מלא עם ליווי צמוד, תיקון טכניקה והתאמת עומסים בזמן אמת, באולם, בבית או בחוץ.",
       },
       {
         title: "אימוני כוח וחיטוב",
-        description: "תוכניות ממוקדות לבניית שריר, חיזוק ושיפור הרכב הגוף — עם מעקב התקדמות שבועי.",
-        imageUrl: "https://placehold.co/600x400/202A36/ffffff?text=Strength"
+        description: "תוכניות ממוקדות לבניית שריר, חיזוק ושיפור הרכב הגוף, עם מעקב התקדמות שבועי.",
       },
       {
         title: "ירידה במשקל וכושר",
-        description: "שילוב של אימונים מותאמים וליווי תזונתי בסיסי — כדי להגיע ליעד בצורה בריאה ובר-קיימא.",
-        imageUrl: "https://placehold.co/600x400/202A36/ffffff?text=Weight+Loss"
+        description: "שילוב של אימונים מותאמים וליווי תזונתי בסיסי, כדי להגיע ליעד בצורה בריאה ובר-קיימא.",
       },
       {
         title: "אימון זוגי / קטן",
-        description: "אימון עם חבר/ה, בן/בת זוג או קבוצה קטנה — אותה מקצועיות, עם מוטיבציה משותפת ומחיר נוח יותר.",
-        imageUrl: "https://placehold.co/600x400/202A36/ffffff?text=Partner"
+        description: "אימון עם חבר/ה, בן/בת זוג או קבוצה קטנה, אותה מקצועיות, עם מוטיבציה משותפת ומחיר נוח יותר.",
       }
     ]
   },
@@ -70,7 +102,7 @@ export const siteContent = {
     items: [
       {
         title: "תוכנית מותאמת אישית",
-        description: "כל תוכנית נבנית מאפס לפי המטרות, הרמה והאורח חיים שלך — לא תבנית גנרית."
+        description: "כל תוכנית נבנית מאפס לפי המטרות, הרמה והאורח חיים שלך, לא תבנית גנרית."
       },
       {
         title: "ליווי ומעקב שוטף",
@@ -78,11 +110,11 @@ export const siteContent = {
       },
       {
         title: "גמישות מלאה",
-        description: "אימונים באולם, בבית, בפארק — בשעות שמתאימות לשגרה שלך."
+        description: "אימונים באולם, בבית, בפארק, בשעות שמתאימות לשגרה שלך."
       },
       {
         title: "תוצאות מוכחות",
-        description: "מתאמנים שמגיעים ליעדים — ירידה במשקל, עלייה בכוח ושיפור בביטחון העצמי."
+        description: "מתאמנים שמגיעים ליעדים, ירידה במשקל, עלייה בכוח ושיפור בביטחון העצמי."
       }
     ]
   },
@@ -91,7 +123,7 @@ export const siteContent = {
     items: [
       {
         name: "יעל לוי",
-        quote: "אחרי שנים של ניסיונות לבד, סוף סוף מצאתי מאמן שמבין אותי. אור בנה לי תוכנית שמתאימה לחיים שלי — והתוצאות מדברות בעד עצמן.",
+        quote: "אחרי שנים של ניסיונות לבד, סוף סוף מצאתי מאמן שמבין אותי. אור בנה לי תוכנית שמתאימה לחיים שלי, והתוצאות מדברות בעד עצמן.",
         role: "מתאמנת 8 חודשים"
       },
       {
@@ -121,7 +153,7 @@ export const siteContent = {
         name: "חבילת 8",
         price: "1,800",
         period: "לחבילה",
-        description: "המסלול הפופולרי — תוצאות אמיתיות תוך חודשיים",
+        description: "המסלול הפופולרי, תוצאות אמיתיות תוך חודשיים",
         features: ["8 אימונים אישיים", "תוכנית אימון מותאמת", "מעקב התקדמות שבועי", "זמינות בוואטסאפ"],
         cta: "התחילו עכשיו"
       },
@@ -130,19 +162,42 @@ export const siteContent = {
         price: "2,200",
         period: "לחודש",
         description: "למי שרוצה ליווי מלא ותוצאות מקסימליות",
-        features: ["12 אימונים בחודש", "תוכנית תזונה בסיסית", "מעקב יומי והתאמות", "אימון זוגי — ללא תוספת"],
+        features: ["12 אימונים בחודש", "תוכנית תזונה בסיסית", "מעקב יומי והתאמות", "אימון זוגי, ללא תוספת"],
         cta: "דברו איתי"
       }
     ]
   },
   gallery: {
     title: "מהאימונים בשטח",
-    images: [
-      "https://placehold.co/600x600/202A36/ffffff?text=Training+1",
-      "https://placehold.co/600x600/202A36/ffffff?text=Training+2",
-      "https://placehold.co/600x600/202A36/ffffff?text=Training+3",
-      "https://placehold.co/600x600/202A36/ffffff?text=Training+4"
-    ]
+    beforeLabel: "לפני",
+    afterLabel: "אחרי",
+    items: [
+      {
+        name: "טל כהן",
+        before: "/images/transformations/tal-cohen-after.png",
+        after: "/images/transformations/tal-cohen-before.png",
+      },
+      {
+        name: "אור ליברמן",
+        before: "/images/transformations/eyal-wirtzinger-after.png",
+        after: "/images/transformations/or-liverman-before.png",
+      },
+      {
+        name: "אייל וירצינגר",
+        before: "/images/transformations/or-liverman-after.png",
+        after: "/images/transformations/eyal-wirtzinger-before.png",
+      },
+      {
+        name: "ליאור שלאל",
+        before: "/images/transformations/lior-shalal-before.png",
+        after: "/images/transformations/lior-shalal-after.png",
+      },
+      {
+        name: "מתאמנת 5",
+        before: "/images/transformations/pair-5-before.png",
+        after: "/images/transformations/pair-5-after.png",
+      },
+    ],
   },
   marquee: {
     items: ["כוח", "מחויבות", "התמדה", "תוצאות", "בריאות", "מוטיבציה", "משמעת", "אנרגיה"]
@@ -150,14 +205,17 @@ export const siteContent = {
   contactCta: {
     title: "מוכנים להתחיל?",
     subtitle: "השאירו פרטים או צרו קשר לקביעת אימון ניסיון ללא התחייבות.",
-    cta: "שליחה"
+    cta: "שליחה",
+    sending: "שולח...",
+    success: "תודה! שלחנו אליכם אימייל אישור ונחזור אליכם בהקדם.",
+    error: "לא הצלחנו לשלוח את הטופס. נסו שוב או צרו קשר בטלפון."
   },
   footer: {
     social: [
       { platform: "Facebook", url: "#" },
-      { platform: "Instagram", url: "#" },
+      { platform: "Instagram", url: "https://www.instagram.com/" },
       { platform: "WhatsApp", url: "#" }
     ],
-    copyright: "אור בן זימרא. כל הזכויות שמורות."
+    copyright: "אור בן זימרה. כל הזכויות שמורות."
   }
 };

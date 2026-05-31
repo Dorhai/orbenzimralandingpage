@@ -11,7 +11,7 @@ const Marquee = ({ items = siteContent.marquee.items, duration = 28 }) => {
   const loop = [...items, ...items];
 
   return (
-    <div className="bg-[#202A36] text-white py-6 overflow-hidden">
+    <div className="bg-primary text-primary-foreground py-6 overflow-hidden">
       <motion.div
         className="flex w-max gap-12 whitespace-nowrap"
         animate={reduced ? undefined : { x: ['0%', '-50%'] }}
@@ -20,7 +20,7 @@ const Marquee = ({ items = siteContent.marquee.items, duration = 28 }) => {
         {loop.map((item, idx) => (
           <span key={idx} className="flex items-center gap-12 text-2xl font-bold tracking-wide">
             <span>{item}</span>
-            <span aria-hidden className="text-white/30">•</span>
+            <span aria-hidden className="text-primary-foreground/30">•</span>
           </span>
         ))}
       </motion.div>

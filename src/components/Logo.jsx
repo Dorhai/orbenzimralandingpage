@@ -1,7 +1,7 @@
 import { siteContent } from '../data/siteContent';
 import { DumbbellMark } from './DumbbellMark';
 
-const LOGO_COLOR = '#3b4654';
+const LOGO_COLOR = '#FAFAFA';
 
 const TaperLine = ({ className = '', flip = false }) => (
   <svg

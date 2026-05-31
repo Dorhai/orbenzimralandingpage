@@ -11,10 +11,10 @@ const Testimonials = () => {
   const { scaleIn } = useMotionSafe();
 
   return (
-    <section id="testimonials" className="py-24 bg-gray-50">
+    <section id="testimonials" className="py-24 bg-background">
       <div className="max-w-7xl mx-auto px-6">
         <Reveal className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl font-bold text-foreground mb-4">
             {siteContent.testimonials.title}
           </h2>
         </Reveal>
@@ -25,14 +25,14 @@ const Testimonials = () => {
               <TiltCard className="h-full">
                 <Card className="h-full text-start relative">
                   <CardContent>
-                    <Quote className="w-10 h-10 text-gray-200 absolute top-6 start-6" />
+                    <Quote className="w-10 h-10 text-border absolute top-6 start-6" />
                     <div className="relative z-10 pt-8">
-                      <p className="text-gray-600 italic mb-6 leading-relaxed">
+                      <p className="text-muted-foreground italic mb-6 leading-relaxed">
                         "{testimonial.quote}"
                       </p>
                       <div>
-                        <h4 className="font-bold text-gray-900">{testimonial.name}</h4>
-                        <p className="text-sm text-gray-500">{testimonial.role}</p>
+                        <h4 className="font-bold text-foreground">{testimonial.name}</h4>
+                        <p className="text-sm text-muted-foreground">{testimonial.role}</p>
                       </div>
                     </div>
                   </CardContent>

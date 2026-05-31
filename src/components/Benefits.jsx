@@ -11,10 +11,10 @@ const AnimatedIcon = (motion.create || motion)(CheckCircle2);
 
 const Benefits = () => {
   return (
-    <section id="benefits" className="py-24 bg-white">
+    <section id="benefits" className="section-padding bg-background">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <StaggerText text={siteContent.benefits.title} className="text-4xl font-bold text-gray-900 mb-4" />
+        <div className="section-intro text-center">
+          <StaggerText text={siteContent.benefits.title} className="section-heading text-foreground" />
         </div>
 
         <StaggerReveal className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto" stagger={0.1}>
@@ -27,11 +27,11 @@ const Benefits = () => {
                     whileInView={{ pathLength: 1, opacity: 1 }}
                     transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
                     viewport={{ once: false }}
-                    className="w-6 h-6 text-[#202A36] shrink-0 mt-1"
+                    className="w-6 h-6 text-primary shrink-0 mt-1"
                   />
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 text-start">{benefit.title}</h3>
-                    <p className="text-gray-600 text-start leading-relaxed">{benefit.description}</p>
+                    <h3 className="text-xl font-bold text-foreground mb-2 text-start">{benefit.title}</h3>
+                    <p className="text-muted-foreground text-start leading-relaxed">{benefit.description}</p>
                   </div>
                 </CardContent>
               </Card>

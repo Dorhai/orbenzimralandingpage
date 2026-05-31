@@ -1,5 +1,5 @@
 import { motion, useTransform } from 'framer-motion';
-import { DUMBBELL_FILL } from '@/lib/dumbbellPieces';
+import { DUMBBELL_FILL, DUMBBELL_STROKE, DUMBBELL_STROKE_WIDTH } from '@/lib/dumbbellPieces';
 
 const REST_OPACITY = 0.32;
 const SCATTER_OPACITY = 0.12;
@@ -12,11 +12,19 @@ function getTransformOrigin(shape, geometry) {
 }
 
 function PieceShape({ shape, geometry, gradientId }) {
+  const strokeProps = {
+    stroke: DUMBBELL_STROKE,
+    strokeWidth: DUMBBELL_STROKE_WIDTH,
+    paintOrder: 'stroke fill',
+  };
+
   if (shape === 'circle') {
     const fill = gradientId ? `url(#${gradientId})` : DUMBBELL_FILL;
-    return <circle cx={geometry.cx} cy={geometry.cy} r={geometry.r} fill={fill} />;
+    return (
+      <circle cx={geometry.cx} cy={geometry.cy} r={geometry.r} fill={fill} {...strokeProps} />
+    );
   }
-  return <rect {...geometry} fill={DUMBBELL_FILL} />;
+  return <rect {...geometry} fill={DUMBBELL_FILL} {...strokeProps} />;
 }
 
 /**

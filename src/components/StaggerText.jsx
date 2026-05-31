@@ -3,14 +3,14 @@ import { useMotionSafe } from '@/lib/animations';
 
 const StaggerText = ({ text, className = '', stagger = 0.05 }) => {
   const { reduced } = useMotionSafe();
-  
-  // If reduced motion is preferred, just return standard motion.div with a simple fade
+  const words = text.split(' ').filter(Boolean);
+
   if (reduced) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ once: false, amount: 0.15 }}
+        viewport={{ once: true, amount: 0.3 }}
         className={className}
       >
         {text}
@@ -18,30 +18,21 @@ const StaggerText = ({ text, className = '', stagger = 0.05 }) => {
     );
   }
 
-  // Split text by words
-  const words = text.split(' ');
-
   const container = {
     hidden: { opacity: 0 },
-    visible: (i = 1) => ({
+    visible: {
       opacity: 1,
-      transition: { staggerChildren: stagger, delayChildren: 0.04 * i },
-    }),
+      transition: { staggerChildren: stagger, delayChildren: 0.04 },
+    },
   };
 
   const child = {
     visible: {
       opacity: 1,
-      y: 0,
-      transition: {
-        type: 'spring',
-        damping: 12,
-        stiffness: 100,
-      },
+      transition: { duration: 0.35, ease: 'easeOut' },
     },
     hidden: {
       opacity: 0,
-      y: 20,
     },
   };
 
@@ -50,13 +41,14 @@ const StaggerText = ({ text, className = '', stagger = 0.05 }) => {
       variants={container}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: false, amount: 0.15 }}
-      className={`flex flex-wrap justify-center ${className}`}
+      viewport={{ once: true, amount: 0.3 }}
+      className={`overflow-visible text-center ${className}`}
       dir="rtl"
     >
       {words.map((word, idx) => (
-        <motion.span variants={child} key={idx} className="mr-[0.25em]">
+        <motion.span variants={child} key={idx} className="inline-block">
           {word}
+          {idx < words.length - 1 ? '\u00A0' : ''}
         </motion.span>
       ))}
     </motion.div>

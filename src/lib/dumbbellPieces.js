@@ -4,7 +4,9 @@
  */
 
 export const VIEWBOX_HORIZONTAL = '0 0 200 72';
-export const DUMBBELL_FILL = '#202A36';
+export const DUMBBELL_FILL = '#DC2626';
+export const DUMBBELL_STROKE = '#000000';
+export const DUMBBELL_STROKE_WIDTH = 1.75;
 
 /** Horizontal logo mark (matches original Logo.jsx artwork) */
 export const HORIZONTAL_RECTS = [
