@@ -1,108 +1,71 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { agentLog } from './debugLog.js';
+let cachedPublicLogoUrl = undefined;
 
-/** Alphanumeric only — Gmail is picky about CID values with hyphens */
-export const EMAIL_LOGO_CID = 'orbenzimalogo';
+/** Live site is on www (Vercel); apex often points at GoDaddy with a mismatched SSL cert */
+export function normalizeSiteUrl(siteUrl) {
+  const trimmed = (siteUrl || '').replace(/\/$/, '');
+  try {
+    const u = new URL(trimmed);
+    if (u.hostname === 'orbenzimrafitnesscoach.com') {
+      u.hostname = 'www.orbenzimrafitnesscoach.com';
+      return u.origin;
+    }
+  } catch {
+    return trimmed || 'https://www.orbenzimrafitnesscoach.com';
+  }
+  return trimmed;
+}
 
-const imagesDir = path.join(
-  path.dirname(fileURLToPath(import.meta.url)),
-  '..',
-  'public',
-  'images',
-);
-
-const logoPath = path.join(imagesDir, 'email-logo.png');
-
-let publicLogoUrlOk = null;
-
-function publicLogoUrl(siteUrl) {
+function logoUrlCandidates(siteUrl) {
   const override = process.env.EMAIL_LOGO_URL?.trim();
   if (override) {
-    return override;
+    return [override];
   }
-  return `${siteUrl.replace(/\/$/, '')}/images/email-logo.png`;
+
+  const normalized = normalizeSiteUrl(siteUrl);
+  const raw = (siteUrl || '').replace(/\/$/, '');
+  const candidates = [
+    `${normalized}/images/email-brand-logo.png`,
+    `${raw}/images/email-brand-logo.png`,
+    'https://www.orbenzimrafitnesscoach.com/images/email-brand-logo.png',
+    // Fallbacks (used only until the new brand logo is deployed)
+    `${normalized}/images/email-logo-header.png`,
+    `${raw}/images/email-logo-header.png`,
+    'https://www.orbenzimrafitnesscoach.com/images/email-logo-header.png',
+  ];
+
+  return [...new Set(candidates.filter(Boolean))];
 }
 
-async function isPublicLogoReachable(siteUrl) {
-  if (publicLogoUrlOk !== null) {
-    return publicLogoUrlOk;
+async function resolveWorkingPublicLogoUrl(siteUrl) {
+  if (cachedPublicLogoUrl !== undefined) {
+    return cachedPublicLogoUrl;
   }
 
-  const url = publicLogoUrl(siteUrl);
-  try {
-    const res = await fetch(url, { method: 'HEAD', signal: AbortSignal.timeout(4000) });
-    publicLogoUrlOk = res.ok;
-  } catch {
-    publicLogoUrlOk = false;
+  for (const url of logoUrlCandidates(siteUrl)) {
+    try {
+      const res = await fetch(url, { method: 'HEAD', signal: AbortSignal.timeout(4000) });
+      if (res.ok) {
+        cachedPublicLogoUrl = url;
+        return url;
+      }
+    } catch {
+      /* try next candidate */
+    }
   }
 
-  return publicLogoUrlOk;
+  cachedPublicLogoUrl = null;
+  return null;
 }
 
-function buildCidAttachment() {
-  if (!fs.existsSync(logoPath)) {
-    return null;
-  }
-
-  const raw = fs.readFileSync(logoPath);
-  return {
-    filename: 'logo.png',
-    content: raw.toString('base64'),
-    contentType: 'image/png',
-    contentId: EMAIL_LOGO_CID,
-  };
-}
+const DEFAULT_LOGO_URL = 'https://www.orbenzimrafitnesscoach.com/images/email-brand-logo.png';
 
 /**
- * Prefer a public HTTPS logo URL (embedded in HTML, no attachment chip in Gmail).
- * Fall back to CID inline attachment when the image is not deployed yet.
+ * Hosted logo URL for embedding in the email HTML (no MIME attachments).
+ * A normal hosted image is loaded by Gmail only when the message is opened — it does not
+ * create a downloadable attachment chip the way a CID/file attachment does.
  */
 export async function resolveEmailLogo(siteUrl) {
-  const url = publicLogoUrl(siteUrl);
-  const usePublicUrl = await isPublicLogoReachable(siteUrl);
-
-  if (usePublicUrl) {
-    // #region agent log
-    agentLog({
-      location: 'server/emailLogo.js:resolveEmailLogo',
-      message: 'using public logo URL in HTML',
-      hypothesisId: 'H-F',
-      runId: 'post-fix-v2',
-      data: { strategy: 'url', logoUrl: url, attachments: 0 },
-    });
-    // #endregion
-
-    return { logoSrc: url, attachments: undefined };
-  }
-
-  const attachment = buildCidAttachment();
-  const logoSrc = attachment ? `cid:${EMAIL_LOGO_CID}` : url;
-
-  // #region agent log
-  agentLog({
-    location: 'server/emailLogo.js:resolveEmailLogo',
-    message: 'using CID inline logo fallback',
-    hypothesisId: 'H-A,H-B,H-G',
-    runId: 'post-fix-v2',
-    data: {
-      strategy: 'cid',
-      logoSrc,
-      contentId: attachment?.contentId ?? null,
-      publicUrlChecked: url,
-      publicUrlOk: false,
-      attachments: attachment ? 1 : 0,
-    },
-  });
-  // #endregion
-
-  return {
-    logoSrc,
-    attachments: attachment ? [attachment] : undefined,
-  };
-}
-
-export function getEmailLogoSrc() {
-  return `cid:${EMAIL_LOGO_CID}`;
+  const workingUrl = await resolveWorkingPublicLogoUrl(siteUrl);
+  const logoSrc = workingUrl ?? logoUrlCandidates(siteUrl)[0] ?? DEFAULT_LOGO_URL;
+  return { logoSrc };
 }

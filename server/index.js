@@ -5,15 +5,14 @@ import { Resend } from 'resend';
 import { siteContent } from '../src/data/siteContent.js';
 import { validateContactBody } from './validateContact.js';
 import { buildAutoReplyHtml, buildLeadNotificationHtml } from './emailTemplates.js';
-import { resolveEmailLogo } from './emailLogo.js';
-import { agentLog } from './debugLog.js';
+import { normalizeSiteUrl, resolveEmailLogo } from './emailLogo.js';
 
 const PORT = Number(process.env.PORT || 3001);
 
 const resendApiKey = process.env.RESEND_API_KEY?.trim();
 const mailConfigured = Boolean(resendApiKey);
 
-const siteUrl = process.env.SITE_URL || 'https://orbenzimrafitnesscoach.com';
+const siteUrl = normalizeSiteUrl(process.env.SITE_URL || 'https://www.orbenzimrafitnesscoach.com');
 const fromEmail =
   process.env.CONTACT_FROM_EMAIL?.trim() || siteContent.contact.email;
 const toEmail = process.env.CONTACT_TO_EMAIL?.trim() || siteContent.contact.email;
@@ -53,16 +52,6 @@ app.get('/api/health', (_req, res) => {
 });
 
 app.post('/api/contact', async (req, res) => {
-  // #region agent log
-  agentLog({
-    location: 'server/index.js:contact:entry',
-    message: 'contact request received',
-    hypothesisId: 'H-A,H-B',
-    runId: 'post-fix',
-    data: { pid: process.pid },
-  });
-  // #endregion
-
   if (!mailConfigured || !resend) {
     return res.status(503).json({
       ok: false,
@@ -90,25 +79,9 @@ app.post('/api/contact', async (req, res) => {
     'מאמן כושר אונליין',
   ].join('\n');
 
-  const { logoSrc, attachments } = await resolveEmailLogo(siteUrl);
+  const { logoSrc } = await resolveEmailLogo(siteUrl);
   const autoReplyHtml = buildAutoReplyHtml({ name, siteUrl, instagramUrl, logoSrc });
   const leadHtml = buildLeadNotificationHtml({ name, phone, email, siteUrl, instagramUrl, logoSrc });
-
-  // #region agent log
-  agentLog({
-    location: 'server/index.js:contact',
-    message: 'email send payload logo',
-    hypothesisId: 'H-A,H-C,H-F',
-    runId: 'post-fix-v2',
-    data: {
-      logoSrcInHtml: logoSrc,
-      usesCid: logoSrc.startsWith('cid:'),
-      usesHttps: logoSrc.startsWith('https://'),
-      attachmentCount: attachments?.length ?? 0,
-      autoReplyOnlyAttachments: true,
-    },
-  });
-  // #endregion
 
   try {
     const leadResult = await resend.emails.send({
@@ -130,36 +103,15 @@ app.post('/api/contact', async (req, res) => {
       subject: 'תודה על הפנייה — אור בן זמרה',
       html: autoReplyHtml,
       text: autoReplyText,
-      attachments,
     });
 
     if (autoReplyResult.error) {
       throw new Error(autoReplyResult.error.message);
     }
 
-    // #region agent log
-    agentLog({
-      location: 'server/index.js:contact:success',
-      message: 'contact emails sent',
-      hypothesisId: 'H-A,H-B',
-      runId: 'post-fix',
-      data: { pid: process.pid, ok: true },
-    });
-    // #endregion
-
     return res.json({ ok: true });
   } catch (err) {
     console.error('[contact] send failed:', err);
-
-    // #region agent log
-    agentLog({
-      location: 'server/index.js:contact:error',
-      message: 'contact send failed',
-      hypothesisId: 'H-C,H-D',
-      runId: 'post-fix',
-      data: { pid: process.pid, error: err?.message ?? String(err) },
-    });
-    // #endregion
 
     return res.status(500).json({
       ok: false,

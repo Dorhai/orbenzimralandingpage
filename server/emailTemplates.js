@@ -3,16 +3,28 @@ const BRAND_BLACK = '#0A0A0A';
 const BRAND_TEXT = '#FAFAFA';
 const DEFAULT_INSTAGRAM = 'https://www.instagram.com/or_benzimra/';
 
+const LOGO_HEADER_HEIGHT = 275;
+
 function logoHeaderRow(logoSrc) {
   return `
     <tr>
       <td align="center" style="background:#ffffff;padding:0;line-height:0;mso-line-height-rule:exactly;font-size:0;">
+        <!--[if mso]>
         <img
           src="${logoSrc}"
           alt="Or Ben Zimra Fitness Coach"
           width="600"
-          style="display:block;width:100%;max-width:600px;height:auto;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"
+          height="${LOGO_HEADER_HEIGHT}"
+          style="display:block;width:600px;height:${LOGO_HEADER_HEIGHT}px;border:0;outline:none;text-decoration:none;"
         />
+        <![endif]-->
+        <!--[if !mso]><!-->
+        <div
+          role="img"
+          aria-label="Or Ben Zimra Fitness Coach"
+          style="width:100%;max-width:600px;height:${LOGO_HEADER_HEIGHT}px;margin:0 auto;background:#ffffff url('${logoSrc}') no-repeat center top;background-size:100% auto;"
+        ></div>
+        <!--<![endif]-->
       </td>
     </tr>
   `;
@@ -20,7 +32,7 @@ function logoHeaderRow(logoSrc) {
 
 function footerBlock(instagramUrl, siteUrl) {
   const instagram = (instagramUrl?.trim() || DEFAULT_INSTAGRAM);
-  const site = siteUrl?.replace(/\/$/, '') || 'https://orbenzimrafitnesscoach.com';
+  const site = siteUrl?.replace(/\/$/, '') || 'https://www.orbenzimrafitnesscoach.com';
   const siteLabel = site.replace(/^https?:\/\//, '');
 
   return `
@@ -72,7 +84,7 @@ const RTL_BLOCK = 'direction:rtl;text-align:right;unicode-bidi:embed;';
 
 export function buildAutoReplyHtml({ name, siteUrl, instagramUrl, logoSrc }) {
   const instagram = instagramUrl?.trim() || DEFAULT_INSTAGRAM;
-  const site = siteUrl?.replace(/\/$/, '') || 'https://orbenzimrafitnesscoach.com';
+  const site = siteUrl?.replace(/\/$/, '') || 'https://www.orbenzimrafitnesscoach.com';
   const siteLabel = site.replace(/^https?:\/\//, '');
   const safeName = escapeHtml(name);
 

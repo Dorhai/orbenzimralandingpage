@@ -120,6 +120,22 @@ export const headlineLine = {
   },
 };
 
+/** Coach cutout rises into frame after the headline */
+export const coachEntrance = {
+  hidden: { opacity: 0, y: 56, scale: 0.94 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.9, ease: EASE_OUT, delay: 0.4 },
+  },
+};
+
+export const coachEntranceReduced = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.25, delay: 0.15 } },
+};
+
 /** Mobile menu items */
 export const menuContainer = {
   hidden: { opacity: 0 },
@@ -183,6 +199,7 @@ export function useMotionSafe() {
     slideInLeft: motionVariant(reduced, slideInLeft, slideInReduced),
     slideInRight: motionVariant(reduced, slideInRight, slideInReduced),
     headlineLine: motionVariant(reduced, headlineLine),
+    coachEntrance: motionVariant(reduced, coachEntrance, coachEntranceReduced),
     menuItem: motionVariant(reduced, menuItem, menuItemReduced),
     // Hover props – disabled when reduced motion is on
     hoverLift: reduced ? undefined : { y: -4, transition: { duration: 0.25, ease: EASE_OUT } },
