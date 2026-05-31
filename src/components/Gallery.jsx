@@ -5,8 +5,10 @@ import StaggerText from './StaggerText';
 const PX_PER_SECOND = 100;
 const VIEWPORT_BUFFER = 520;
 
-const GallerySlide = ({ src, label, alt, beforeLabel, afterLabel }) => {
+const GallerySlide = ({ src, label, alt, beforeLabel, afterLabel, imageFocus }) => {
   const isBefore = label === beforeLabel;
+  const scale = imageFocus?.scale ?? 1;
+  const objectPosition = imageFocus?.objectPosition ?? 'center';
 
   return (
     <Card className="shrink-0 w-52 sm:w-60 md:w-64 overflow-hidden p-0 border-border">
@@ -14,7 +16,12 @@ const GallerySlide = ({ src, label, alt, beforeLabel, afterLabel }) => {
         <img
           src={src}
           alt={alt}
-          className="absolute inset-0 h-full w-full object-cover object-center"
+          className="absolute inset-0 h-full w-full object-cover"
+          style={{
+            objectPosition,
+            transform: scale !== 1 ? `scale(${scale})` : undefined,
+            transformOrigin: objectPosition,
+          }}
           draggable={false}
           loading="lazy"
         />
@@ -40,8 +47,18 @@ const Gallery = () => {
   const slides = useMemo(
     () =>
       items.flatMap((item, i) => [
-        { src: item.before, label: beforeLabel, alt: `${beforeLabel} ${i + 1}` },
-        { src: item.after, label: afterLabel, alt: `${afterLabel} ${i + 1}` },
+        {
+          src: item.before,
+          label: beforeLabel,
+          alt: `${beforeLabel} ${i + 1}`,
+          imageFocus: item.beforeImageFocus,
+        },
+        {
+          src: item.after,
+          label: afterLabel,
+          alt: `${afterLabel} ${i + 1}`,
+          imageFocus: item.afterImageFocus,
+        },
       ]),
     [items, beforeLabel, afterLabel]
   );
@@ -101,7 +118,7 @@ const Gallery = () => {
   }, [loopSlides]);
 
   return (
-    <section id="gallery" className="section-padding relative bg-card overflow-x-hidden">
+    <section id="gallery" className="section-padding relative bg-background overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-6 mb-10 md:mb-12">
         <div className="text-center">
           <StaggerText text={title} className="section-heading text-foreground" />
@@ -118,6 +135,7 @@ const Gallery = () => {
               alt=""
               beforeLabel={beforeLabel}
               afterLabel={afterLabel}
+              imageFocus={slide.imageFocus}
             />
           ))}
         </div>
@@ -134,6 +152,7 @@ const Gallery = () => {
                 alt={slide.alt}
                 beforeLabel={beforeLabel}
                 afterLabel={afterLabel}
+                imageFocus={slide.imageFocus}
               />
             ))}
           </div>

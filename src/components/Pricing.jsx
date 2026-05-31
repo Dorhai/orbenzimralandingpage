@@ -23,7 +23,7 @@ const Pricing = () => {
   const backgroundY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : ['-20%', '20%']);
 
   return (
-    <section ref={sectionRef} id="pricing" className="section-padding bg-card relative overflow-hidden">
+    <section ref={sectionRef} id="pricing" className="section-padding bg-background relative overflow-hidden">
       {/* Decorative Parallax Background */}
       <motion.div
         style={{ y: backgroundY }}

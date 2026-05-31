@@ -2,7 +2,9 @@ import { motion, useScroll } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
+import Philosophy from './components/Philosophy';
 import Programs from './components/Programs';
+import FAQ from './components/FAQ';
 import Benefits from './components/Benefits';
 import Pricing from './components/Pricing';
 import Gallery from './components/Gallery';
@@ -25,6 +27,8 @@ function App() {
         <SectionDivider />
         <About />
         <SectionDivider />
+        <Philosophy />
+        <SectionDivider />
         <Benefits />
         <SectionDivider />
         <Gallery />
@@ -32,6 +36,8 @@ function App() {
         <Programs />
         <SectionDivider />
         <Pricing />
+        <SectionDivider />
+        <FAQ />
         <SectionDivider />
         <ContactCTA />
       </main>

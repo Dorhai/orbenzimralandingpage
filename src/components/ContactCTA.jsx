@@ -12,8 +12,6 @@ import { Input } from '@/components/ui/input';
 
 import { Label } from '@/components/ui/label';
 
-import MagneticWrapper from './MagneticWrapper';
-
 import ShineButton from './ShineButton';
 
 import { useMotionSafe, staggerContainer, fadeUp, fadeUpReduced, motionVariant } from '@/lib/animations';
@@ -27,7 +25,7 @@ const initialForm = { name: '', phone: '', email: '' };
 
 const ContactCTA = () => {
 
-  const { hoverScaleSubtle, tapScale, reduced } = useMotionSafe();
+  const { reduced } = useMotionSafe();
   const isDesktop = useMediaQuery('(min-width: 768px)');
 
   const sectionRef = useRef(null);
@@ -98,7 +96,7 @@ const ContactCTA = () => {
 
     try {
 
-      const res = await fetch('/api/contact', {
+      let res = await fetch('/api/contact', {
 
         method: 'POST',
 
@@ -107,6 +105,17 @@ const ContactCTA = () => {
         body: JSON.stringify(form),
 
       });
+
+      if (res.status === 502) {
+        await new Promise((resolve) => {
+          window.setTimeout(resolve, 800);
+        });
+        res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(form),
+        });
+      }
 
 
 
@@ -118,7 +127,12 @@ const ContactCTA = () => {
 
         setStatus('error');
 
-        setMessage(data.error || siteContent.contactCta.error);
+        setMessage(
+          data.error
+            || (res.status === 502
+              ? 'השרת מתחיל מחדש — נסו שוב בעוד רגע.'
+              : siteContent.contactCta.error),
+        );
 
         return;
 
@@ -282,9 +296,9 @@ const ContactCTA = () => {
 
 
 
-          <motion.div style={{ x: xLeft, opacity }}>
+          <motion.div style={{ x: xLeft, opacity }} className="min-w-0">
 
-            <Card className="text-start">
+            <Card className="text-start overflow-hidden">
 
               <CardContent>
 
@@ -404,29 +418,21 @@ const ContactCTA = () => {
 
 
 
-                  <MagneticWrapper className="w-full flex">
+                  <ShineButton
 
-                    <motion.div whileHover={hoverScaleSubtle} whileTap={tapScale} className="w-full">
+                    type="submit"
 
-                      <ShineButton
+                    size="lg"
 
-                        type="submit"
+                    className="w-full max-w-full rounded-xl text-lg"
 
-                        size="lg"
+                    disabled={isSubmitting}
 
-                        className="w-full rounded-xl text-lg"
+                  >
 
-                        disabled={isSubmitting}
+                    {isSubmitting ? siteContent.contactCta.sending : siteContent.contactCta.cta}
 
-                      >
-
-                        {isSubmitting ? siteContent.contactCta.sending : siteContent.contactCta.cta}
-
-                      </ShineButton>
-
-                    </motion.div>
-
-                  </MagneticWrapper>
+                  </ShineButton>
 
                 </form>
 

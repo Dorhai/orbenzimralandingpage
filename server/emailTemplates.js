@@ -1,18 +1,17 @@
 const BRAND_RED = '#DC2626';
 const BRAND_BLACK = '#0A0A0A';
 const BRAND_TEXT = '#FAFAFA';
+const DEFAULT_INSTAGRAM = 'https://www.instagram.com/or_benzimra/';
 
-function logoBlock(siteUrl) {
-  const logoUrl = `${siteUrl.replace(/\/$/, '')}/images/email-logo.png`;
-
+function logoHeaderRow(logoSrc) {
   return `
     <tr>
-      <td align="center" style="padding:32px 24px 20px;background:${BRAND_BLACK};">
+      <td align="center" style="background:#ffffff;padding:0;line-height:0;mso-line-height-rule:exactly;font-size:0;">
         <img
-          src="${logoUrl}"
-          alt="OR BEN ZIMRA — FITNESS COACH"
-          width="320"
-          style="display:block;max-width:320px;width:100%;height:auto;border:0;margin:0 auto;"
+          src="${logoSrc}"
+          alt="Or Ben Zimra Fitness Coach"
+          width="600"
+          style="display:block;width:100%;max-width:600px;height:auto;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"
         />
       </td>
     </tr>
@@ -20,49 +19,44 @@ function logoBlock(siteUrl) {
 }
 
 function footerBlock(instagramUrl, siteUrl) {
-  const instagram = instagramUrl?.trim() || '';
-  const site = siteUrl?.replace(/\/$/, '') || '';
+  const instagram = (instagramUrl?.trim() || DEFAULT_INSTAGRAM);
+  const site = siteUrl?.replace(/\/$/, '') || 'https://orbenzimrafitnesscoach.com';
+  const siteLabel = site.replace(/^https?:\/\//, '');
 
   return `
     <tr>
-      <td align="center" style="padding:24px;background:#f4f4f5;border-top:1px solid #e4e4e7;">
-        ${
-          instagram
-            ? `<p style="margin:0 0 12px;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#52525b;">
-                עקבו אחריי באינסטגרם:
-              </p>
-              <a
-                href="${instagram}"
-                style="display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;color:${BRAND_RED};text-decoration:none;"
-              >Instagram</a>`
-            : ''
-        }
-        ${
-          site
-            ? `<p style="margin:16px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#71717a;">
-                <a href="${site}" style="color:#71717a;text-decoration:underline;">${site.replace(/^https?:\/\//, '')}</a>
-              </p>`
-            : ''
-        }
+      <td align="center" dir="rtl" style="background:#f7f7f7;padding:20px;border-top:1px solid #e5e5e5;direction:rtl;text-align:center;">
+        <p align="center" dir="rtl" style="margin:0 0 10px;font-size:14px;color:#666;direction:rtl;text-align:center;">
+          רוצים לראות עוד תוצאות, טיפים ותוכן יומי?
+        </p>
+        <a
+          href="${instagram}"
+          target="_blank"
+          style="font-size:15px;font-weight:700;color:#e1306c;text-decoration:none;"
+        >Instagram</a>
+        <p style="margin:12px 0 0;font-size:13px;color:#888;direction:ltr;text-align:center;">
+          <a href="${site}" style="color:#888;text-decoration:none;">${siteLabel}</a>
+        </p>
       </td>
     </tr>
   `;
 }
 
-function wrapEmail({ siteUrl, instagramUrl, bodyRows }) {
+function wrapEmail({ siteUrl, instagramUrl, bodyRows, logoSrc }) {
   return `<!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="ltr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>אור בן זימרה</title>
 </head>
-<body style="margin:0;padding:0;background:#e4e4e7;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#e4e4e7;">
+<body dir="ltr" style="margin:0;padding:0;background:#ffffff;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" dir="ltr" style="background:#ffffff;">
     <tr>
-      <td align="center" style="padding:24px 12px;">
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#ffffff;border-radius:12px;overflow:hidden;">
-          ${logoBlock(siteUrl)}
+      <td align="center" style="padding:0;">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" dir="rtl" style="width:100%;max-width:600px;background:#ffffff;direction:rtl;">
+          ${logoHeaderRow(logoSrc)}
           ${bodyRows}
           ${footerBlock(instagramUrl, siteUrl)}
         </table>
@@ -73,44 +67,90 @@ function wrapEmail({ siteUrl, instagramUrl, bodyRows }) {
 </html>`;
 }
 
-export function buildAutoReplyHtml({ name, siteUrl, instagramUrl }) {
-  const bodyRows = `
+const RTL_CELL = 'direction:rtl;text-align:right;unicode-bidi:embed;';
+const RTL_BLOCK = 'direction:rtl;text-align:right;unicode-bidi:embed;';
+
+export function buildAutoReplyHtml({ name, siteUrl, instagramUrl, logoSrc }) {
+  const instagram = instagramUrl?.trim() || DEFAULT_INSTAGRAM;
+  const site = siteUrl?.replace(/\/$/, '') || 'https://orbenzimrafitnesscoach.com';
+  const siteLabel = site.replace(/^https?:\/\//, '');
+  const safeName = escapeHtml(name);
+
+  return `<!DOCTYPE html>
+<html lang="he" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>אור בן זמרה - מאמן כושר אונליין</title>
+</head>
+<body dir="ltr" style="margin:0;padding:0;background:#ffffff;font-family:Arial,Helvetica,sans-serif;color:#222;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" dir="ltr" style="background:#ffffff;">
     <tr>
-      <td style="padding:32px 28px 28px;font-family:Arial,Helvetica,sans-serif;color:#18181b;line-height:1.7;">
-        <p style="margin:0 0 16px;font-size:18px;font-weight:bold;">שלום ${escapeHtml(name)},</p>
-        <p style="margin:0 0 16px;font-size:16px;">
-          תודה על הפנייה ועל ההתעניינות!
-        </p>
-        <p style="margin:0 0 16px;font-size:16px;">
-          קיבלנו את הפרטים שלך ונחזור אליך בהקדם האפשרי.
-        </p>
-        <p style="margin:0;font-size:16px;">
-          בברכה,<br />
-          <strong>אור בן זימרה</strong><br />
-          <span style="color:#52525b;">מאמן כושר אישי</span>
-        </p>
+      <td align="center" style="padding:0;">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" dir="rtl" style="width:100%;max-width:600px;background:#ffffff;direction:rtl;">
+          ${logoHeaderRow(logoSrc)}
+          <tr>
+            <td align="right" dir="rtl" style="padding:36px 32px 32px;${RTL_CELL}">
+              <h2 align="right" dir="rtl" style="margin:0 0 22px;font-size:22px;line-height:1.5;font-weight:700;color:#111;${RTL_BLOCK}">
+                &#x202B;שלום ${safeName},&#x202C;
+              </h2>
+              <p align="right" dir="rtl" style="margin:0 0 18px;font-size:17px;line-height:1.9;color:#333;${RTL_BLOCK}">
+                &#x202B;תודה על הפנייה ועל ההתעניינות בליווי האונליין שלי.&#x202C;
+              </p>
+              <p align="right" dir="rtl" style="margin:0 0 18px;font-size:17px;line-height:1.9;color:#333;${RTL_BLOCK}">
+                &#x202B;קיבלתי את הפרטים שלך ואחזור אליך בהקדם האפשרי כדי להבין את המטרה שלך
+                ולבדוק איך נוכל להתחיל לבנות עבורך תוכנית שמתאימה בדיוק לך.&#x202C;
+              </p>
+              <p align="right" dir="rtl" style="margin:28px 0 8px;font-size:17px;line-height:1.8;color:#333;${RTL_BLOCK}">
+                &#x202B;בברכה,&#x202C;
+              </p>
+              <p align="right" dir="rtl" style="margin:0;font-size:18px;line-height:1.6;font-weight:700;color:#111;${RTL_BLOCK}">
+                &#x202B;אור בן זמרה&#x202C;
+              </p>
+              <p align="right" dir="rtl" style="margin:4px 0 0;font-size:15px;color:#777;${RTL_BLOCK}">
+                &#x202B;מאמן כושר אונליין&#x202C;
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" dir="rtl" style="background:#f7f7f7;padding:20px;border-top:1px solid #e5e5e5;direction:rtl;text-align:center;">
+              <p style="margin:0 0 12px;font-size:14px;color:#666;direction:rtl;text-align:center;">
+                רוצים לראות עוד תוצאות, טיפים ותוכן יומי?
+              </p>
+              <a
+                href="${instagram}"
+                target="_blank"
+                style="font-size:15px;font-weight:700;color:#e1306c;text-decoration:none;"
+              >Instagram</a>
+              <p style="margin:12px 0 0;font-size:13px;color:#888;direction:ltr;text-align:center;">
+                <a href="${site}" style="color:#888;text-decoration:none;">${siteLabel}</a>
+              </p>
+            </td>
+          </tr>
+        </table>
       </td>
     </tr>
-  `;
-
-  return wrapEmail({ siteUrl, instagramUrl, bodyRows });
+  </table>
+</body>
+</html>`;
 }
 
-export function buildLeadNotificationHtml({ name, phone, email, siteUrl, instagramUrl }) {
+export function buildLeadNotificationHtml({ name, phone, email, siteUrl, instagramUrl, logoSrc }) {
   const bodyRows = `
     <tr>
-      <td style="padding:28px;font-family:Arial,Helvetica,sans-serif;color:#18181b;line-height:1.6;">
-        <p style="margin:0 0 12px;font-size:18px;font-weight:bold;">ליד חדש מהאתר</p>
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="font-size:15px;">
-          <tr><td style="padding:8px 0;border-bottom:1px solid #e4e4e7;"><strong>שם:</strong> ${escapeHtml(name)}</td></tr>
-          <tr><td style="padding:8px 0;border-bottom:1px solid #e4e4e7;"><strong>טלפון:</strong> <span dir="ltr">${escapeHtml(phone)}</span></td></tr>
-          <tr><td style="padding:8px 0;"><strong>אימייל:</strong> <span dir="ltr">${escapeHtml(email)}</span></td></tr>
+      <td align="right" dir="rtl" style="padding:28px 32px;font-family:Arial,Helvetica,sans-serif;color:#18181b;line-height:1.6;direction:rtl;text-align:right;">
+        <p align="right" dir="rtl" style="margin:0 0 12px;font-size:18px;font-weight:bold;direction:rtl;text-align:right;">&#x202B;ליד חדש מהאתר&#x202C;</p>
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" dir="rtl" style="font-size:15px;direction:rtl;">
+          <tr><td align="right" dir="rtl" style="padding:8px 0;border-bottom:1px solid #e4e4e7;text-align:right;"><strong>שם:</strong> ${escapeHtml(name)}</td></tr>
+          <tr><td align="right" dir="rtl" style="padding:8px 0;border-bottom:1px solid #e4e4e7;text-align:right;"><strong>טלפון:</strong> <span dir="ltr">${escapeHtml(phone)}</span></td></tr>
+          <tr><td align="right" dir="rtl" style="padding:8px 0;text-align:right;"><strong>אימייל:</strong> <span dir="ltr">${escapeHtml(email)}</span></td></tr>
         </table>
       </td>
     </tr>
   `;
 
-  return wrapEmail({ siteUrl, instagramUrl, bodyRows });
+  return wrapEmail({ siteUrl, instagramUrl, bodyRows, logoSrc });
 }
 
 function escapeHtml(value) {

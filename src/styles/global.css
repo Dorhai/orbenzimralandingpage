@@ -278,6 +278,21 @@
     }
   }
 
+  .hero-cta-label--wide {
+    max-width: min(22rem, 92vw);
+    padding: 0.85rem 1.5rem;
+    font-size: clamp(0.875rem, 2.2vw, 1rem);
+    line-height: 1.35;
+    white-space: normal;
+  }
+
+  @media (min-width: 640px) {
+    .hero-cta-label--wide {
+      max-width: 28rem;
+      padding: 0.85rem 2rem;
+    }
+  }
+
   .hero-cta:hover .hero-cta-label,
   .hero-cta:focus-visible .hero-cta-label {
     background: var(--brand-red-dark);
