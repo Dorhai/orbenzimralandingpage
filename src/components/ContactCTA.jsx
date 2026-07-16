@@ -2,7 +2,27 @@ import { useRef, useState } from 'react';
 
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 
-import { Phone, Mail, MapPin } from 'lucide-react';
+import { Mail } from 'lucide-react';
+
+function InstagramIcon({ className }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  );
+}
 
 import { siteContent } from '../data/siteContent';
 
@@ -234,26 +254,6 @@ const ContactCTA = () => {
 
                   <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
 
-                    <Phone className="w-5 h-5" />
-
-                  </div>
-
-                  <div>
-
-                    <p className="text-sm text-muted-foreground">טלפון</p>
-
-                    <p className="text-lg font-medium" dir="ltr">{siteContent.contact.phone}</p>
-
-                  </div>
-
-                </motion.div>
-
-
-
-                <motion.div variants={rowItem} className="flex items-center gap-4">
-
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
-
                     <Mail className="w-5 h-5" />
 
                   </div>
@@ -274,15 +274,23 @@ const ContactCTA = () => {
 
                   <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
 
-                    <MapPin className="w-5 h-5" />
+                    <InstagramIcon className="w-5 h-5" />
 
                   </div>
 
                   <div>
 
-                    <p className="text-sm text-muted-foreground">כתובת</p>
+                    <p className="text-sm text-muted-foreground">אינסטגרם</p>
 
-                    <p className="text-lg font-medium">{siteContent.contact.address}</p>
+                    <a
+                      href={siteContent.contact.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-lg font-medium text-foreground hover:text-primary underline-offset-4 hover:underline transition-colors"
+                      dir="ltr"
+                    >
+                      {siteContent.contact.instagramHandle}
+                    </a>
 
                   </div>
 
@@ -350,7 +358,7 @@ const ContactCTA = () => {
 
                       dir="rtl"
 
-                      placeholder="050-000-0000"
+                      placeholder="052-3469943"
 
                       value={form.phone}
 

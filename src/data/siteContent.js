@@ -10,9 +10,10 @@ export const siteContent = {
     logoSubtext: "FITNESS COACH"
   },
   contact: {
-    phone: "050-000-0000",
-    email: "or@orbenzimra.co.il",
-    address: "ליווי אונליין מכל מקום בישראל"
+    phone: "052-3469943",
+    email: "Contact@orbenzimrafitnesscoach.com",
+    instagram: "https://www.instagram.com/or_benzimra/",
+    instagramHandle: "@or_benzimra"
   },
   nav: {
     links: [
