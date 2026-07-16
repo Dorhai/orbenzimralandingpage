@@ -46,17 +46,17 @@ const Gallery = () => {
 
   const slides = useMemo(
     () =>
-      items.flatMap((item, i) => [
+      items.flatMap((item) => [
         {
           src: item.before,
           label: beforeLabel,
-          alt: `${beforeLabel} ${i + 1}`,
+          alt: `${item.name} – ${beforeLabel} ליווי אונליין עם אור בן זימרה`,
           imageFocus: item.beforeImageFocus,
         },
         {
           src: item.after,
           label: afterLabel,
-          alt: `${afterLabel} ${i + 1}`,
+          alt: `${item.name} – ${afterLabel} ליווי אונליין עם אור בן זימרה`,
           imageFocus: item.afterImageFocus,
         },
       ]),
@@ -118,10 +118,10 @@ const Gallery = () => {
   }, [loopSlides]);
 
   return (
-    <section id="gallery" className="section-padding relative bg-background overflow-x-hidden">
+    <section id="gallery" className="section-padding relative bg-card overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-6 mb-10 md:mb-12">
         <div className="text-center">
-          <StaggerText text={title} className="section-heading text-foreground" />
+          <StaggerText as="h2" text={title} className="section-heading text-foreground" />
         </div>
       </div>
 

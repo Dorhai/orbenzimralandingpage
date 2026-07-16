@@ -31,7 +31,7 @@ const Benefits = () => {
     <section id="benefits" className="section-padding bg-card">
       <div className="max-w-7xl mx-auto px-6">
         <div className="section-intro text-center">
-          <StaggerText text={siteContent.benefits.title} className="section-heading text-foreground" />
+          <StaggerText as="h2" text={siteContent.benefits.title} className="section-heading text-foreground" />
         </div>
 
         <StaggerReveal className="flex flex-col gap-4 max-w-3xl mx-auto" stagger={0.08}>

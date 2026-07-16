@@ -1,19 +1,19 @@
-import { Dumbbell, Flame, User, Users } from 'lucide-react';
+import { Dumbbell, Flame, Smartphone, User } from 'lucide-react';
 import { siteContent } from '../data/siteContent';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import StaggerReveal from './StaggerReveal';
 import HoverLift from './HoverLift';
 import TiltCard from './TiltCard';
 import StaggerText from './StaggerText';
 
-const programIcons = [User, Dumbbell, Flame, Users];
+const programIcons = [User, Dumbbell, Flame, Smartphone];
 
 const Programs = () => {
   return (
-    <section id="programs" className="section-padding bg-card">
+    <section id="programs" className="section-padding bg-background">
       <div className="max-w-7xl mx-auto px-6">
         <div className="section-intro text-center">
-          <StaggerText text={siteContent.programs.title} className="section-heading text-foreground" />
+          <StaggerText as="h2" text={siteContent.programs.title} className="section-heading text-foreground" />
         </div>
 
         <StaggerReveal className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" stagger={0.1}>
@@ -30,7 +30,9 @@ const Programs = () => {
                       >
                         <Icon className="h-6 w-6" strokeWidth={2} />
                       </div>
-                      <CardTitle className="text-xl text-start">{program.title}</CardTitle>
+                      <h3 data-slot="card-title" className="leading-none font-semibold text-xl text-start">
+                        {program.title}
+                      </h3>
                     </CardHeader>
                     <CardContent className="pb-6 pt-2 flex-1">
                       <p className="text-muted-foreground leading-relaxed text-start">{program.description}</p>

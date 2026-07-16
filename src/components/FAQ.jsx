@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronDown, Clock, Home, Utensils, User } from 'lucide-react';
+import { Calculator, ChevronDown, Clock, Utensils, User } from 'lucide-react';
 import { siteContent } from '../data/siteContent';
 import StaggerText from './StaggerText';
 import Reveal from './Reveal';
 import { useMotionSafe } from '@/lib/animations';
 
-const faqIcons = { Home, Clock, Utensils, User };
+const faqIcons = { Calculator, Clock, Utensils, User };
 
 const FAQItem = ({ item, index, isOpen, onToggle, reduced }) => {
   const Icon = faqIcons[item.icon] ?? User;
@@ -73,7 +73,7 @@ const FAQ = () => {
     <section id="faq" className="section-padding bg-card">
       <div className="max-w-7xl mx-auto px-6">
         <div className="section-intro text-center">
-          <StaggerText text={faq.title} className="section-heading text-foreground" />
+          <StaggerText as="h2" text={faq.title} className="section-heading text-foreground" />
         </div>
 
         <div className="flex flex-col gap-4 max-w-3xl mx-auto">

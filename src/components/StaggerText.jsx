@@ -1,20 +1,21 @@
 import { motion } from 'framer-motion';
 import { useMotionSafe } from '@/lib/animations';
 
-const StaggerText = ({ text, className = '', stagger = 0.05 }) => {
+const StaggerText = ({ text, className = '', stagger = 0.05, as = 'div' }) => {
   const { reduced } = useMotionSafe();
   const words = text.split(' ').filter(Boolean);
+  const MotionTag = motion[as] ?? motion.div;
 
   if (reduced) {
     return (
-      <motion.div
+      <MotionTag
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, amount: 0.3 }}
         className={className}
       >
         {text}
-      </motion.div>
+      </MotionTag>
     );
   }
 
@@ -37,7 +38,7 @@ const StaggerText = ({ text, className = '', stagger = 0.05 }) => {
   };
 
   return (
-    <motion.div
+    <MotionTag
       variants={container}
       initial="hidden"
       whileInView="visible"
@@ -51,7 +52,7 @@ const StaggerText = ({ text, className = '', stagger = 0.05 }) => {
           {idx < words.length - 1 ? '\u00A0' : ''}
         </motion.span>
       ))}
-    </motion.div>
+    </MotionTag>
   );
 };
 

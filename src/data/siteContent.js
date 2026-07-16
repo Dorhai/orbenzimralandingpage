@@ -1,3 +1,6 @@
+import beforePhoto from '../assets/newbackpicture.jpeg';
+import afterPhoto from '../assets/backpicture.jpeg';
+
 export const siteContent = {
   gym: {
     name: "אור בן זימרה",
@@ -17,14 +20,11 @@ export const siteContent = {
       { label: "אודות", href: "#about" },
       { label: "מסלולים", href: "#programs" },
       { label: "יתרונות", href: "#benefits" },
-      { label: "מחירים", href: "#pricing" },
       { label: "גלריה", href: "#gallery" },
     ],
     cta: "קבעו שיחת היכרות"
   },
   hero: {
-    coachImage: "/images/coach-cutout.png",
-    coachImageAlt: "אור בן זימרה, מאמן כושר אונליין",
     backgroundImageAlt: "רקע אימון",
     label: "מאמן כושר אונליין",
     headlineLine1: "הגיע הזמן להפסיק להילחם לבד",
@@ -35,13 +35,13 @@ export const siteContent = {
   },
   about: {
     title: "קצת עלי",
-    beforeImage: "/images/about/or-before.png?v=3",
-    afterImage: "/images/about/or-after.png",
+    beforeImage: beforePhoto,
+    afterImage: afterPhoto,
     beforeImageAlt: "אור בן זימרה לפני השינוי",
     afterImageAlt: "אור בן זימרה אחרי השינוי",
     lines: [
       {
-        text: "התחלתי כילד רזה, ביישן וחסר ביטחון,",
+        text: "התחלתי כילד, ביישן וחסר ביטחון,",
         redLine: true,
         maxWidth: "42rem",
       },
@@ -81,7 +81,7 @@ export const siteContent = {
     items: [
       {
         title: "ליווי אונליין מלא",
-        description: "תוכנית אימונים ותזונה מותאמת אישית, בדיקות התקדמות שבועיות בוואטסאפ או בווידאו, והתאמות מתמשכות לאורך הדרך.",
+        description: "תוכנית אימונים ותזונה מותאמת אישית, זמינות מלאה גם בשישי ושבת, צ'ק-אין שבועי, שיחת זום חודשית לבדיקת היקפים, והתאמות מתמשכות לאורך הדרך.",
       },
       {
         title: "תוכנית אימונים + מעקב",
@@ -92,8 +92,8 @@ export const siteContent = {
         description: "תוכנית אונליין ממוקדת לירידה במשקל וחיטוב, עם ליווי תזונתי בסיסי ומעקב שוטף, בצורה בריאה ובר קיימא.",
       },
       {
-        title: "ליווי VIP",
-        description: "ליווי בעדיפות עם זמינות מורחבת, התאמות מהירות לתוכנית, בדיקות התקדמות תכופות ותמיכה צמודה לאורך כל הדרך.",
+        title: "אפליקציית ליווי מתקדמת",
+        description: "גישה לאפליקציה שמרכזת את כל התהליך במקום אחד, אימונים, תזונה, מעקב התקדמות, משקלים וצעדים יומיים.",
       }
     ]
   },
@@ -137,6 +137,52 @@ export const siteContent = {
         icon: "User",
       },
     ]
+  },
+  coachingApp: {
+    title: "אפליקציה מתקדמת לניהול הליווי והתקדמות",
+    subtitle:
+      "בנוסף לליווי האישי, תקבל גישה לאפליקציית ניהול שמאפשרת לך לעקוב אחר כל התהליך במקום אחד, אימונים, תזונה ומעקב התקדמות.",
+    features: [
+      {
+        title: "תוכנית אימונים מלאה",
+        description:
+          "התוכנית שלך כוללת גישה למאגר עצום של תרגילים וסרטוני טכניקה, כדי שתוכל להחליף תרגילים בגמישות לפי הצורך.",
+        icon: "Dumbbell",
+      },
+      {
+        title: "תפריט תזונה מותאם",
+        description:
+          "תפריט שבועי מגוון עם מתכונים טעימים ומזינים, מותאם בדיוק למטרות שלך.",
+        icon: "Utensils",
+      },
+      {
+        title: "מעקב קלוריות יומי",
+        description:
+          "מאגר מוצרים ישראלי ענק שמאפשר לך לעקוב בדיוק אחרי מה שאתה אוכל.",
+        icon: "Calculator",
+      },
+      {
+        title: "מעקב משקלים באימון",
+        description:
+          "רישום וניהול של עומסי האימון — כדי לראות התקדמות אמיתית מיום ליום.",
+        icon: "Weight",
+      },
+      {
+        title: "מעקב משקל גוף",
+        description: "הזנת משקל וצפייה בגרפים ותובנות לאורך זמן.",
+        icon: "TrendingUp",
+      },
+      {
+        title: "מעקב צעדים יומי",
+        description: "סנכרון עם שעון חכם למעקב אחר הפעילות היומית שלך.",
+        icon: "Footprints",
+      },
+    ],
+    closing: {
+      title: "הכל במקום אחד!",
+      text: "אימונים, תזונה ומעקב, הכל באפליקציה אחת, כדי שתוכל להתמקד במה שחשוב באמת:",
+      highlight: "ההתקדמות שלך",
+    },
   },
   testimonials: {
     title: "מה אומרים המתאמנים",
@@ -260,9 +306,9 @@ export const siteContent = {
     footnote: "עדיין יש שאלה? השאירו פרטים למטה ונענה בשיחה.",
     items: [
       {
-        question: "אני צריך חדר כושר?",
-        answer: "לא. ניתן לבנות תוכנית גם לבית, עם ציוד מינימלי או בלי.",
-        icon: "Home",
+        question: "האם אני חייב לספור קלוריות?",
+        answer: "בעיקרון לא אבל תמיד מומלץ כדי לדייק ולעבוד נכון יותר",
+        icon: "Calculator",
       },
       {
         question: "כמה זמן לוקח לראות תוצאות?",

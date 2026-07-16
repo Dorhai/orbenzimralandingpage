@@ -183,8 +183,11 @@
     font-size: clamp(1.5rem, 5.5vw, 3rem);
     line-height: 1.25;
     text-shadow:
-      0 0 20px color-mix(in srgb, var(--brand-red) 80%, transparent),
-      0 0 40px color-mix(in srgb, var(--brand-red) 50%, transparent);
+      0 0 6px rgba(255, 255, 255, 0.95),
+      0 0 14px rgba(255, 255, 255, 0.85),
+      0 0 28px rgba(255, 255, 255, 0.65),
+      0 0 48px rgba(255, 255, 255, 0.45),
+      0 0 72px rgba(255, 255, 255, 0.3);
   }
 
   .coach-cutout-glow {
@@ -192,6 +195,20 @@
       drop-shadow(0 0 12px color-mix(in srgb, var(--brand-red) 55%, transparent))
       drop-shadow(0 0 28px color-mix(in srgb, var(--brand-red) 40%, transparent))
       drop-shadow(0 0 48px color-mix(in srgb, var(--brand-red) 25%, transparent));
+  }
+
+  .hero-bg-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 100%;
+    width: auto;
+    min-width: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: var(--hero-bg-position-x, 50%) var(--hero-bg-position-y, 42%);
+    transform: translate(-50%, -50%) scale(var(--hero-bg-scale, 1));
+    transform-origin: var(--hero-bg-position-x, 50%) var(--hero-bg-position-y, 42%);
   }
 
   @property --hero-cta-angle {

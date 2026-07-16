@@ -98,6 +98,8 @@ const About = () => {
 
           <StaggerText
 
+            as="h2"
+
             text={title}
 
             className="about-story-title section-heading text-foreground"

@@ -1,59 +1,118 @@
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+
 import { siteContent } from '../data/siteContent';
+
 import { headlineContainer, useMotionSafe } from '@/lib/animations';
-import coachCutout from '../assets/coach-cutout.png';
-import heroGymBg from '../assets/hero-gym-bg.png';
+
 import HeroCta from './HeroCta';
 
+const HERO_BG = '/images/transformations/dor_zinor.png';
+const IMAGE_ASPECT = 2750 / 1536;
+
+const getHeroBgFit = (baseDpr, viewportWidth, viewportHeight) => {
+  const browserZoom = window.devicePixelRatio / baseDpr;
+  const isMobile = viewportWidth < 640;
+  const isDesktop = viewportWidth >= 1024;
+
+  const heightFitWidth = viewportHeight * IMAGE_ASPECT;
+  let viewportScale = 1;
+
+  if (heightFitWidth < viewportWidth) {
+    viewportScale = viewportWidth / heightFitWidth;
+  }
+
+  if (isMobile) {
+    viewportScale *= 1.06;
+  } else if (isDesktop) {
+    viewportScale *= 0.98;
+  }
+
+  return {
+    scale: browserZoom * viewportScale,
+    positionX: '50%',
+    positionY: isMobile ? '36%' : isDesktop ? '44%' : '40%',
+  };
+};
+
 const Hero = () => {
-  const { headlineLine, coachEntrance, fadeUp } = useMotionSafe();
+  const { headlineLine, fadeUp } = useMotionSafe();
+  const baseDprRef = useRef(null);
+  const [heroBgFit, setHeroBgFit] = useState({
+    scale: 1,
+    positionX: '50%',
+    positionY: '42%',
+  });
+
+  useEffect(() => {
+    if (baseDprRef.current === null) {
+      baseDprRef.current = window.devicePixelRatio;
+    }
+
+    const updateHeroFit = () => {
+      const baseDpr = baseDprRef.current ?? window.devicePixelRatio;
+      const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
+      const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+
+      setHeroBgFit(getHeroBgFit(baseDpr, viewportWidth, viewportHeight));
+    };
+
+    updateHeroFit();
+    window.addEventListener('resize', updateHeroFit);
+    window.visualViewport?.addEventListener('resize', updateHeroFit);
+    window.visualViewport?.addEventListener('scroll', updateHeroFit);
+
+    return () => {
+      window.removeEventListener('resize', updateHeroFit);
+      window.visualViewport?.removeEventListener('resize', updateHeroFit);
+      window.visualViewport?.removeEventListener('scroll', updateHeroFit);
+    };
+  }, []);
 
   return (
-    <section className="relative min-h-screen overflow-hidden">
-      {/* Gym background */}
-      <div className="absolute inset-0 z-0">
+    <section className="relative min-h-svh overflow-hidden">
+      <div className="absolute inset-0 z-0 overflow-hidden bg-black">
         <img
-          src={heroGymBg}
+          src={HERO_BG}
+          width={2750}
+          height={1536}
           alt={siteContent.hero.backgroundImageAlt}
-          className="absolute inset-0 w-full h-full object-cover scale-105 blur-[4px]"
+          className="hero-bg-image"
+          style={{
+            '--hero-bg-scale': heroBgFit.scale,
+            '--hero-bg-position-x': heroBgFit.positionX,
+            '--hero-bg-position-y': heroBgFit.positionY,
+          }}
           loading="eager"
+          fetchPriority="high"
+          decoding="sync"
         />
-        <div className="absolute inset-0 bg-black/55" aria-hidden />
+
+        <div className="absolute inset-0 bg-black/40" aria-hidden />
       </div>
 
-      <div className="relative z-10 min-h-screen flex flex-col items-center pointer-events-none pt-[4.75rem] sm:pt-[5.5rem] pb-6">
-        <motion.div
+      <div className="relative z-10 flex min-h-svh flex-col items-center pointer-events-none pt-[4.75rem] sm:pt-[5.5rem] pb-6">
+        <motion.h1
           className="hero-headline w-full shrink-0"
           variants={headlineContainer}
           initial="hidden"
           animate="visible"
         >
-          <motion.p className="hero-headline-line1" variants={headlineLine}>
+          <span className="sr-only">
+            {siteContent.gym.name} – {siteContent.hero.label}. {siteContent.hero.subtitle}{' '}
+          </span>
+
+          <motion.span className="hero-headline-line1" variants={headlineLine}>
             {siteContent.hero.headlineLine1}
-          </motion.p>
-          <motion.p className="hero-headline-line2 hero-text-overlap" variants={headlineLine}>
+          </motion.span>
+
+          <motion.span className="hero-headline-line2 hero-text-overlap" variants={headlineLine}>
             {siteContent.hero.headlineLine2}
-          </motion.p>
-        </motion.div>
+          </motion.span>
+        </motion.h1>
 
-        <div className="mt-3 flex w-full flex-col items-center sm:mt-4 lg:mt-0 lg:min-h-0 lg:flex-1 lg:justify-end">
+        <div className="flex w-full flex-1 flex-col items-center justify-end pb-2 sm:pb-4">
           <motion.div
-            className="coach-cutout-glow"
-            variants={coachEntrance}
-            initial="hidden"
-            animate="visible"
-          >
-            <img
-              src={coachCutout}
-              alt={siteContent.hero.coachImageAlt}
-              className="h-[min(58vh,36rem)] sm:h-[min(65vh,40rem)] md:h-[min(75vh,42rem)] w-auto max-w-[92vw] object-contain"
-              draggable={false}
-              loading="eager"
-            />
-          </motion.div>
-
-          <motion.div
-            className="mt-8 mb-2 sm:mt-6 lg:mt-5 lg:mb-1"
             variants={fadeUp}
             initial="hidden"
             animate="visible"

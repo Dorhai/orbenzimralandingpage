@@ -6,7 +6,7 @@ import Philosophy from './components/Philosophy';
 import Programs from './components/Programs';
 import FAQ from './components/FAQ';
 import Benefits from './components/Benefits';
-import Pricing from './components/Pricing';
+import CoachingApp from './components/CoachingApp';
 import Gallery from './components/Gallery';
 import ContactCTA from './components/ContactCTA';
 import Footer from './components/Footer';
@@ -31,11 +31,11 @@ function App() {
         <SectionDivider />
         <Benefits />
         <SectionDivider />
+        <CoachingApp />
+        <SectionDivider />
         <Gallery />
         <SectionDivider />
         <Programs />
-        <SectionDivider />
-        <Pricing />
         <SectionDivider />
         <FAQ />
         <SectionDivider />

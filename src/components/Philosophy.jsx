@@ -63,7 +63,7 @@ const Philosophy = () => {
 
             <div className="text-start order-1 lg:order-2">
               <div className="section-intro">
-                <StaggerText text={philosophy.title} className="section-heading text-foreground" />
+                <StaggerText as="h2" text={philosophy.title} className="section-heading text-foreground" />
               </div>
               <div className="about-story-block">
                 {philosophy.empathy.map((line, idx) => (
