@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { siteContent } from '../data/siteContent';
 import Logo from './Logo';
 import StaggerReveal from './StaggerReveal';
@@ -46,6 +47,26 @@ const Footer = () => {
         </StaggerReveal>
 
         <div className="text-center text-muted-foreground text-sm border-t border-border pt-8">
+          <nav
+            className="flex flex-wrap justify-center items-center gap-x-1 gap-y-2 mb-4"
+            aria-label="מסמכים משפטיים"
+          >
+            {siteContent.footer.legalLinks.map((link, index) => (
+              <span key={link.href} className="inline-flex items-center">
+                {index > 0 && (
+                  <span className="mx-2 text-muted-foreground/60" aria-hidden="true">
+                    ·
+                  </span>
+                )}
+                <Link
+                  to={link.href}
+                  className="hover:text-foreground transition-colors"
+                >
+                  {link.label}
+                </Link>
+              </span>
+            ))}
+          </nav>
           <p>&copy; {new Date().getFullYear()} {siteContent.footer.copyright}</p>
         </div>
       </div>

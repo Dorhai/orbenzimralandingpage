@@ -340,6 +340,11 @@ export const siteContent = {
     error: "לא הצלחנו לשלוח את הטופס. נסו שוב או צרו קשר בטלפון."
   },
   footer: {
+    legalLinks: [
+      { label: 'תקנון האתר', href: '/terms' },
+      { label: 'מדיניות פרטיות', href: '/privacy' },
+      { label: 'הצהרת נגישות', href: '/accessibility' },
+    ],
     social: [
       { platform: "Facebook", url: "#" },
       { platform: "Instagram", url: "https://www.instagram.com/or_benzimra/" },

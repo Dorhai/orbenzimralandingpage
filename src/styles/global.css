@@ -400,3 +400,20 @@
     }
   }
 }
+
+/* UserWay widget: bottom-left on desktop, safe spacing on mobile */
+body.userway.userway_p5 {
+  bottom: max(20px, env(safe-area-inset-bottom)) !important;
+  left: max(20px, env(safe-area-inset-left)) !important;
+  right: auto !important;
+  top: auto !important;
+}
+
+@media screen and (max-width: 768px) {
+  body.userway.userway_p5 {
+    bottom: max(16px, env(safe-area-inset-bottom)) !important;
+    left: max(12px, env(safe-area-inset-left)) !important;
+    transform: scale(0.88);
+    transform-origin: bottom left;
+  }
+}
